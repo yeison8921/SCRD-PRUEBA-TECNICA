@@ -6,7 +6,12 @@
         <form @submit.prevent="guardarVehiculo">
           <div class="mb-3 text-start">
             <label class="form-label required">Placa</label>
-            <input v-model="vehiculo.placa" class="form-control" type="text" />
+            <input
+              v-model="vehiculo.placa"
+              class="form-control"
+              type="text"
+              required
+            />
           </div>
           <div class="mb-3 text-start">
             <label class="form-label required">Modelo</label>
@@ -14,6 +19,7 @@
               v-model="vehiculo.modelo"
               class="form-control"
               type="number"
+              required
             />
           </div>
           <div class="mb-3 text-start">
@@ -22,6 +28,7 @@
               v-model="vehiculo.capacidad"
               class="form-control"
               type="text"
+              required
             />
           </div>
           <div class="mb-3 center">

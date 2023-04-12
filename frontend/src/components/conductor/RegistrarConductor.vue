@@ -10,6 +10,7 @@
               v-model="conductor.identificacion"
               class="form-control"
               type="number"
+              required
             />
           </div>
           <div class="mb-3 text-start">
@@ -18,6 +19,7 @@
               v-model="conductor.nombre"
               class="form-control"
               type="text"
+              required
             />
           </div>
           <div class="mb-3 text-start">
@@ -26,6 +28,7 @@
               v-model="conductor.apellido"
               class="form-control"
               type="text"
+              required
             />
           </div>
           <div class="mb-3 text-start">
@@ -34,6 +37,7 @@
               v-model="conductor.telefono"
               class="form-control"
               type="number"
+              required
             />
           </div>
           <div class="mb-3 text-start">
@@ -42,6 +46,7 @@
               v-model="conductor.direccion"
               class="form-control"
               type="text"
+              required
             />
           </div>
 

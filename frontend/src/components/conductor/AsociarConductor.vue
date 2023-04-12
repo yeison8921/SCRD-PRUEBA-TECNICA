@@ -12,6 +12,7 @@
               v-model="conductor_id"
               :options="options_conductores"
               @input="getVehiculosByConductor()"
+              required
             />
           </div>
           <div class="mb-3 text-start">
@@ -21,6 +22,7 @@
               label="nombre"
               v-model="vehiculo_id"
               :options="options_vehiculos"
+              required
             />
           </div>
           <div class="mb-3 center">

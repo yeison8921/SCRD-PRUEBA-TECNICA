@@ -11,8 +11,8 @@
               label="full_name"
               v-model="conductor_id"
               :options="options_conductores"
-              required
               @input="getVehiculosByConductor()"
+              required
             />
           </div>
           <div class="mb-3 text-start">
@@ -21,8 +21,8 @@
               valueProp="id"
               label="nombre"
               v-model="vehiculo_id"
-              required
               :options="options_vehiculos"
+              required
             />
           </div>
           <div class="mb-3 center">
