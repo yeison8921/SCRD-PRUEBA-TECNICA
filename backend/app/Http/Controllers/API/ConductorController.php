@@ -16,7 +16,7 @@ class ConductorController extends Controller
     public function index()
     {
         $conductores = Conductor::all();
-        return $conductores;
+        return response()->json($conductores, 200);
     }
 
     /**
@@ -29,7 +29,7 @@ class ConductorController extends Controller
     {
         $conductor = new Conductor();
         $conductor->create($request->all());
-        return response('Conductor creado exitosamente', 200);
+        return response()->json(['message' => 'Conductor creado exitosamente'], 200);
     }
 
     /**

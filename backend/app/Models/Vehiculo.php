@@ -17,4 +17,11 @@ class Vehiculo extends Model
         'capacidad',
         'conductor_id',
     ];
+
+    protected $appends = ['nombre'];
+
+    public function getNombreAttribute()
+    {
+        return 'Vehículo con placa ' . trim($this->placa);
+    }
 }

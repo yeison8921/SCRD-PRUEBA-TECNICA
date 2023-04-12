@@ -16,7 +16,7 @@ class VehiculoController extends Controller
     public function index()
     {
         $vehiculos = Vehiculo::all();
-        return $vehiculos;
+        return response()->json($vehiculos, 200);
     }
 
     /**
@@ -29,7 +29,7 @@ class VehiculoController extends Controller
     {
         $vehiculo = new Vehiculo();
         $vehiculo->create($request->all());
-        return response('Vehículo creado exitosamente', 200);
+        return response()->json(['message' => 'Vehículo creado exitosamente'], 200);
     }
 
     /**
@@ -54,7 +54,7 @@ class VehiculoController extends Controller
     {
         $vehiculo = Vehiculo::find($vehiculo->id);
         $vehiculo->update($request->all());
-        return response('Vehículo aactualizado exitosamente', 200);
+        return response()->json(['message' => 'Vehículo aactualizado exitosamente'], 200);
     }
 
     /**
@@ -67,16 +67,16 @@ class VehiculoController extends Controller
     {
         //
     }
-
-    public function getVehiculosAsignadosConductor(Request $request)
+    public function getVehiculosByConductor(Request $request)
     {
-        $vehiculos = Vehiculo::where("conductor_id", $request->conductor_id)->get();
-        return $vehiculos;
-    }
+        $vehiculos = new Vehiculo;
+        if ($request->filtro == 'asociados') {
+            $vehiculos = $vehiculos::where('conductor_id', $request->conductor_id);
+        } else {
+            $vehiculos = $vehiculos::where('conductor_id', '!=', $request->conductor_id)->OrWhereNull('conductor_id');
+        }
 
-    public function getVehiculosNoAsignadosConductor(Request $request)
-    {
-        $vehiculos = Vehiculo::where("conductor_id", "!=", $request->conductor_id)->OrWhereNull("conductor_id")->get();
-        return $vehiculos;
+        $vehiculos = $vehiculos->get();
+        return response()->json($vehiculos);
     }
 }

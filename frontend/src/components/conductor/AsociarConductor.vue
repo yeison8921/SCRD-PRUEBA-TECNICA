@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-body">
         <form @submit.prevent="asociarConductor">
+          <h4>Asociar conductor a vehículo</h4>
           <div class="mb-3 text-start">
             <label for="">Elegir conductor</label>
             <Multiselect
@@ -10,14 +11,14 @@
               label="full_name"
               v-model="conductor_id"
               :options="options_conductores"
-              @input="getVehiculosNoAsignadosConductor()"
+              @input="getVehiculosByConductor()"
             />
           </div>
           <div class="mb-3 text-start">
             <label for="">Elegir vehiculo</label>
             <Multiselect
               valueProp="id"
-              label="placa"
+              label="nombre"
               v-model="vehiculo_id"
               :options="options_vehiculos"
             />
@@ -58,16 +59,32 @@ export default {
           Swal.close();
         });
     },
-    getVehiculosNoAsignadosConductor() {
+    getVehiculosByConductor() {
+      Swal.fire({
+        title: "Consultando vehículos disponibles",
+        text: "Espere un poco por favor.",
+        showConfirmButton: false,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
+
       this.vehiculo_id = "";
+      this.options_vehiculos = [];
+
       setTimeout(() => {
-        axios
-          .post("http://127.0.0.1:8000/api/getVehiculosNoAsignadosConductor", {
-            conductor_id: this.conductor_id,
-          })
-          .then((response) => {
-            this.options_vehiculos = response.data;
-          });
+        if (this.conductor_id != null && this.conductor_id != "") {
+          axios
+            .post("http://127.0.0.1:8000/api/getVehiculosByConductor", {
+              filtro: "no_asociados",
+              conductor_id: this.conductor_id,
+            })
+            .then((response) => {
+              Swal.close();
+              this.options_vehiculos = response.data;
+            });
+        } else {
+          Swal.close();
+        }
       }, 1000);
     },
     async asociarConductor() {

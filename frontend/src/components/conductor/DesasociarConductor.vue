@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-body">
         <form @submit.prevent="desasociarConductor">
+          <h4>Deasociar conductor a vehículo</h4>
           <div class="mb-3 text-start">
             <label for="">Elegir conductor</label>
             <Multiselect
@@ -11,14 +12,14 @@
               v-model="conductor_id"
               :options="options_conductores"
               required
-              @input="getVehiculosAsignadosConductor()"
+              @input="getVehiculosByConductor()"
             />
           </div>
           <div class="mb-3 text-start">
             <label for="">Elegir vehiculo</label>
             <Multiselect
               valueProp="id"
-              label="placa"
+              label="nombre"
               v-model="vehiculo_id"
               required
               :options="options_vehiculos"
@@ -60,28 +61,34 @@ export default {
           Swal.close();
         });
     },
-    getVehiculosAsignadosConductor() {
+    getVehiculosByConductor() {
+      Swal.fire({
+        title: "Consultando vehículos asociados",
+        text: "Espere un poco por favor.",
+        showConfirmButton: false,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
       this.vehiculo_id = "";
+      this.options_vehiculos = [];
+
       setTimeout(() => {
-        axios
-          .post("http://127.0.0.1:8000/api/getVehiculosAsignadosConductor", {
-            conductor_id: this.conductor_id,
-          })
-          .then((response) => {
-            this.options_vehiculos = response.data;
-            Swal.close();
-            // Swal.fire({
-            //   title: "Éxito",
-            //   html: "Conductor creado exitosamente",
-            //   icon: "success",
-            //   showConfirmButton: false,
-            //   allowEscapeKey: false,
-            //   allowOutsideClick: false,
-            //   timer: 2500,
-            // });
-          });
+        if (this.conductor_id != null && this.conductor_id != "") {
+          axios
+            .post("http://127.0.0.1:8000/api/getVehiculosByConductor", {
+              filtro: "asociados",
+              conductor_id: this.conductor_id,
+            })
+            .then((response) => {
+              Swal.close();
+              this.options_vehiculos = response.data;
+            });
+        } else {
+          Swal.close();
+        }
       }, 1000);
     },
+
     async desasociarConductor() {
       Swal.fire({
         title: "Desasociando conductor",

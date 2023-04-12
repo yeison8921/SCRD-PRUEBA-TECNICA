@@ -2,6 +2,7 @@
   <div class="col-lg-8 offset-lg-2">
     <div class="card">
       <div class="card-body">
+        <h4>Registrar nuevo conductor</h4>
         <form @submit.prevent="guardarConductor">
           <div class="mb-3 text-start">
             <label class="form-label required">Identificación</label>

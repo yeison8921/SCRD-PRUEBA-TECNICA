@@ -32,12 +32,4 @@ class Conductor extends Model
     {
         return trim($this->nombre) . ' ' . trim($this->apellido);
     }
-
-    // /**
-    //  * Obtiene los vehiculos sedes de la empresa.
-    //  */
-    // public function sedes()
-    // {
-    //     return $this->hasMany(EmpresaSede::class);
-    // }
 }

@@ -2,6 +2,7 @@
   <div class="col-lg-8 offset-lg-2">
     <div class="card">
       <div class="card-body">
+        <h4>Registrar nuevo vehículo</h4>
         <form @submit.prevent="guardarVehiculo">
           <div class="mb-3 text-start">
             <label class="form-label required">Placa</label>
@@ -64,6 +65,9 @@ export default {
             allowOutsideClick: false,
             timer: 2500,
           });
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 500);
         });
     },
   },

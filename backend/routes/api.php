@@ -20,7 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('vehiculos', VehiculoController::class);
-Route::post('getVehiculosAsignadosConductor', [VehiculoController::class, 'getVehiculosAsignadosConductor']);
-Route::post('getVehiculosNoAsignadosConductor', [VehiculoController::class, 'getVehiculosNoAsignadosConductor']);
-Route::apiResource('conductores', ConductorController::class);
+Route::group(['middleware' => 'guest'], function () {
+    Route::apiResource('vehiculos', VehiculoController::class);
+    Route::post('getVehiculosByConductor', [VehiculoController::class, 'getVehiculosByConductor']);
+    Route::apiResource('conductores', ConductorController::class);
+});
